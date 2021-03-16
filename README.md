@@ -1,0 +1,2 @@
+# amaris
+Test for Inditex
