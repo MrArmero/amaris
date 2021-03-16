@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-public class TestUtils {
+public class UtilsTesting {
 
     public static final String UNEXPECTED_VALUE = "Unexpected value";
 

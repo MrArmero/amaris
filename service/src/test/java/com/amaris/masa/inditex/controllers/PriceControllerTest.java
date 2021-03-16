@@ -2,7 +2,7 @@ package com.amaris.masa.inditex.controllers;
 
 import com.amaris.masa.inditex.dtos.PriceDTO;
 import com.amaris.masa.inditex.services.PriceService;
-import com.amaris.masa.inditex.utils.TestUtils;
+import com.amaris.masa.inditex.utils.UtilsTesting;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -39,8 +39,8 @@ class PriceControllerTest {
         mockMvc.perform(get("/prices/find/2020-06-18-01.01.00/35455/1")).andDo(print()).andExpect(status().isOk());
         MvcResult requestResult = mockMvc.perform(get("/prices/find/2020-06-18-01.01.00/35455/1"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
-        PriceDTO response = TestUtils.parseResponse(requestResult, PriceDTO.class);
-        assertEquals(priceDTO.getPrice(), response.getPrice(), TestUtils.UNEXPECTED_VALUE);
+        PriceDTO response = UtilsTesting.parseResponse(requestResult, PriceDTO.class);
+        assertEquals(priceDTO.getPrice(), response.getPrice(), UtilsTesting.UNEXPECTED_VALUE);
     }
 
     @Test
@@ -61,8 +61,8 @@ class PriceControllerTest {
                     .param("brandId", "1"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
 
-        PriceDTO response = TestUtils.parseResponse(requestResult, PriceDTO.class);
-        assertEquals(priceDTO.getPrice(), response.getPrice(), TestUtils.UNEXPECTED_VALUE);
+        PriceDTO response = UtilsTesting.parseResponse(requestResult, PriceDTO.class);
+        assertEquals(priceDTO.getPrice(), response.getPrice(), UtilsTesting.UNEXPECTED_VALUE);
     }
 
     @Test
