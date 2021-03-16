@@ -1,6 +1,5 @@
 package com.amaris.masa.inditex.controllers;
 
-import com.amaris.masa.inditex.datamodel.Price;
 import com.amaris.masa.inditex.dtos.PriceDTO;
 import com.amaris.masa.inditex.dtos.PriceRequest;
 import com.amaris.masa.inditex.exceptions.RecordNotFoundException;

@@ -10,8 +10,6 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.CollectionUtils;
 
-import javax.validation.constraints.AssertTrue;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest

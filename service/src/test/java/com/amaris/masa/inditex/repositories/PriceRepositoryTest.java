@@ -1,11 +1,9 @@
 package com.amaris.masa.inditex.repositories;
 
 import com.amaris.masa.inditex.datamodel.Price;
-import com.amaris.masa.inditex.dtos.PriceDTO;
 import com.amaris.masa.inditex.utils.UtilsTesting;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.CollectionUtils;
@@ -14,9 +12,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
