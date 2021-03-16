@@ -44,18 +44,18 @@ class PriceControllerTest {
     }
 
     @Test
-    void getPriceByPost() throws Exception {
+    void getPriceByPostFindingByParams() throws Exception {
         PriceDTO priceDTO = new PriceDTO(35455, 1, 1, new Date(), new Date(), "82.93", "EUR");
         when(priceServiceMock.getPriceByDateProductAndBrand(any(Date.class), anyInt(), anyInt())).thenReturn(priceDTO);
 
-        mockMvc.perform(post("/prices/find")
+        mockMvc.perform(post("/prices/find/params")
                     .param("date", "2020-06-18-01.01.00")
                     .param("productId", "35455")
                     .param("brandId", "1"))
                 .andDo(print()).andExpect(status().isOk());
 
 
-        MvcResult requestResult = mockMvc.perform(post("/prices/find")
+        MvcResult requestResult = mockMvc.perform(post("/prices/find/params")
                     .param("date", "2020-06-18-01.01.00")
                     .param("productId", "35455")
                     .param("brandId", "1"))

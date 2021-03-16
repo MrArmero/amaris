@@ -2,6 +2,7 @@ package com.amaris.masa.inditex.controllers;
 
 import com.amaris.masa.inditex.datamodel.Price;
 import com.amaris.masa.inditex.dtos.PriceDTO;
+import com.amaris.masa.inditex.dtos.PriceRequest;
 import com.amaris.masa.inditex.exceptions.RecordNotFoundException;
 import com.amaris.masa.inditex.services.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class PriceController {
      * @return
      * @throws RecordNotFoundException
      */
-    @GetMapping(value = "/find/{date}/{productId}/{brandId}", produces = "application/json")
+    @GetMapping(value = "/find/{date}/{productId}/{brandId}")
     public ResponseEntity<PriceDTO> getPriceByGet(@PathVariable(value = "date") @DateTimeFormat(pattern="yyyy-MM-dd-hh.mm.ss") Date date,
                                              @PathVariable(value = "productId") Integer productId,
                                              @PathVariable(value = "brandId") Integer brandId) throws RecordNotFoundException {
@@ -41,19 +42,30 @@ public class PriceController {
     }
 
     /**
-     * Obtiene un precio con una llamada POST
+     * Obtiene un precio con una llamada POST pasando parámetros.
      * @param date
      * @param productId
      * @param brandId
-     * @return
+     * @return Precio
      * @throws RecordNotFoundException
      */
-    @PostMapping(value = "/find", produces = "application/json")
+    @PostMapping(value = "/find/params")
     public ResponseEntity<PriceDTO> getPriceByPost(@RequestParam(value = "date") @DateTimeFormat(pattern="yyyy-MM-dd-hh.mm.ss") Date date,
                                                    @RequestParam(value = "productId") Integer productId,
                                                    @RequestParam(value = "brandId") Integer brandId) throws RecordNotFoundException {
 
         return new ResponseEntity<PriceDTO>(priceService.getPriceByDateProductAndBrand(date, productId, brandId), new HttpHeaders(), HttpStatus.OK);
+    }
+
+    /**
+     * Obtiene un precio con una llamada POST pasando un objeto json que se mapee al DTO priceRequest.
+     * @param priceRequest
+     * @return Precio
+     * @throws RecordNotFoundException
+     */
+    @PostMapping(value = "/find", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<PriceDTO> getPriceByPost(@RequestBody PriceRequest priceRequest) throws RecordNotFoundException {
+        return new ResponseEntity<PriceDTO>(priceService.getPriceByDateProductAndBrand(priceRequest), new HttpHeaders(), HttpStatus.OK);
     }
 
     /**
