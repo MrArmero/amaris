@@ -1,0 +1,10 @@
+com\amaris\masa\inditex\exceptions\RecordNotFoundException.class
+com\amaris\masa\inditex\controllers\BrandController.class
+com\amaris\masa\inditex\dtos\PriceDTO.class
+com\amaris\masa\inditex\InditexApplication.class
+com\amaris\masa\inditex\repositories\BrandRepository.class
+com\amaris\masa\inditex\services\BrandService.class
+com\amaris\masa\inditex\controllers\PriceController.class
+com\amaris\masa\inditex\repositories\PriceRepository.class
+com\amaris\masa\inditex\services\PriceService.class
+com\amaris\masa\inditex\utils\Constants.class

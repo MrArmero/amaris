@@ -1,0 +1,4 @@
+com\amaris\masa\inditex\datamodel\Product.class
+com\amaris\masa\inditex\datamodel\Price.class
+com\amaris\masa\inditex\datamodel\Brand.class
+com\amaris\masa\inditex\datamodel\AbstractEntity.class

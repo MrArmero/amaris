@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>inditex</artifactId>
+    <groupId>com.amaris.masa</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>inditext</name>
+    <description>Prueba para Inditex</description>
+
+    <organization>
+        <name>Miguel Ángel Sánchez Armero</name>
+        <url>https://www.linkedin.com/in/miguel-angel-sanchez-armero-67785435</url>
+    </organization>
+
+    <modules>
+        <module>domain</module>
+        <module>service</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.200</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <developers>
+        <developer>
+            <id>MASA</id>
+            <name>Miguel Ángel Sánchez Armero</name>
+        </developer>
+    </developers>
+
+</project>
