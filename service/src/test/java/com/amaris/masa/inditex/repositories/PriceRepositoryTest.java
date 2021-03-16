@@ -1,7 +1,7 @@
 package com.amaris.masa.inditex.repositories;
 
 import com.amaris.masa.inditex.datamodel.Price;
-import com.amaris.masa.inditex.utils.UtilsTesting;
+import com.amaris.masa.inditex.utils.TestinginditextUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -27,7 +27,7 @@ class PriceRepositoryTest {
     @Test
     void findAll() {
         // Simplemente para validar que el sql esta cargado como corresponde en la BD
-        assertEquals(4,priceRepository.findAll().size(), UtilsTesting.UNEXPECTED_VALUE);
+        assertEquals(4,priceRepository.findAll().size(), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
@@ -36,7 +36,7 @@ class PriceRepositoryTest {
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
                 sdf.parse("2020-06-18-01.01.00"),35455,1);
 
-        assertFalse(CollectionUtils.isEmpty(prices), UtilsTesting.UNEXPECTED_VALUE);
+        assertFalse(CollectionUtils.isEmpty(prices), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
@@ -45,7 +45,7 @@ class PriceRepositoryTest {
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
                 sdf.parse("2020-06-18-01.01.00"),35455,1);
 
-        assertEquals(CollectionUtils.firstElement(prices).getAmount(), BigDecimal.valueOf(38.95), UtilsTesting.UNEXPECTED_VALUE);
+        assertEquals(CollectionUtils.firstElement(prices).getAmount(), BigDecimal.valueOf(38.95), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
@@ -54,7 +54,7 @@ class PriceRepositoryTest {
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
                 sdf.parse("2020-06-14-17.01.00"),35455,1);
 
-        assertEquals(CollectionUtils.firstElement(prices).getAmount(), BigDecimal.valueOf(25.45), UtilsTesting.UNEXPECTED_VALUE);
+        assertEquals(CollectionUtils.firstElement(prices).getAmount(), BigDecimal.valueOf(25.45), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
@@ -63,7 +63,7 @@ class PriceRepositoryTest {
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
                 sdf.parse("2020-06-15-11.00.00"),35455,1);
 
-        assertEquals(CollectionUtils.firstElement(prices).getId(), 3, UtilsTesting.UNEXPECTED_VALUE);
+        assertEquals(CollectionUtils.firstElement(prices).getId(), 3, TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
@@ -72,6 +72,6 @@ class PriceRepositoryTest {
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
                 sdf.parse("2023-06-15-11.00.00"),35455,1);
 
-        assertTrue(CollectionUtils.isEmpty(prices), UtilsTesting.UNEXPECTED_VALUE);
+        assertTrue(CollectionUtils.isEmpty(prices), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 }

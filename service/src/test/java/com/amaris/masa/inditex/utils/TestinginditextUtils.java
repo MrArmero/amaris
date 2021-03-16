@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-public class UtilsTesting {
+public class TestinginditextUtils {
 
     public static final String UNEXPECTED_VALUE = "Unexpected value";
 

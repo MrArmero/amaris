@@ -1,14 +1,19 @@
 package com.amaris.masa.inditex.controllers;
 
 import com.amaris.masa.inditex.dtos.PriceDTO;
+import com.amaris.masa.inditex.dtos.PriceRequest;
 import com.amaris.masa.inditex.services.PriceService;
-import com.amaris.masa.inditex.utils.UtilsTesting;
+import com.amaris.masa.inditex.utils.TestinginditextUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -39,12 +44,12 @@ class PriceControllerTest {
         mockMvc.perform(get("/prices/find/2020-06-18-01.01.00/35455/1")).andDo(print()).andExpect(status().isOk());
         MvcResult requestResult = mockMvc.perform(get("/prices/find/2020-06-18-01.01.00/35455/1"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
-        PriceDTO response = UtilsTesting.parseResponse(requestResult, PriceDTO.class);
-        assertEquals(priceDTO.getPrice(), response.getPrice(), UtilsTesting.UNEXPECTED_VALUE);
+        PriceDTO response = TestinginditextUtils.parseResponse(requestResult, PriceDTO.class);
+        assertEquals(priceDTO.getPrice(), response.getPrice(), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
-    void getPriceByPostFindingByParams() throws Exception {
+    void getPriceByPostFindingByParamsIsOK() throws Exception {
         PriceDTO priceDTO = new PriceDTO(35455, 1, 1, new Date(), new Date(), "82.93", "EUR");
         when(priceServiceMock.getPriceByDateProductAndBrand(any(Date.class), anyInt(), anyInt())).thenReturn(priceDTO);
 
@@ -53,22 +58,50 @@ class PriceControllerTest {
                     .param("productId", "35455")
                     .param("brandId", "1"))
                 .andDo(print()).andExpect(status().isOk());
+    }
 
+    @Test
+    void getPriceByPostFindingByParamsHasAValidResponse() throws Exception {
+        PriceDTO priceDTO = new PriceDTO(35455, 1, 1, new Date(), new Date(), "82.93", "EUR");
+        when(priceServiceMock.getPriceByDateProductAndBrand(any(Date.class), anyInt(), anyInt())).thenReturn(priceDTO);
 
         MvcResult requestResult = mockMvc.perform(post("/prices/find/params")
-                    .param("date", "2020-06-18-01.01.00")
-                    .param("productId", "35455")
-                    .param("brandId", "1"))
+                .param("date", "2020-06-18-01.01.00")
+                .param("productId", "35455")
+                .param("brandId", "1"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
 
-        PriceDTO response = UtilsTesting.parseResponse(requestResult, PriceDTO.class);
-        assertEquals(priceDTO.getPrice(), response.getPrice(), UtilsTesting.UNEXPECTED_VALUE);
+        PriceDTO response = TestinginditextUtils.parseResponse(requestResult, PriceDTO.class);
+        assertEquals(priceDTO.getPrice(), response.getPrice(), TestinginditextUtils.UNEXPECTED_VALUE);
+    }
+
+    @Test
+    void getPriceByPriceRequest() throws Exception {
+        PriceDTO priceDTO = new PriceDTO(35, 1, 1, new Date(), new Date(), "82.93", "EUR");
+        when(priceServiceMock.getPriceByDateProductAndBrand(any(PriceRequest.class))).thenReturn(priceDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/prices/find")
+                .content(asJsonString(new PriceRequest(new Date(), 1,1)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.productId").exists()
+        );
+
     }
 
     @Test
     void getPrices() throws Exception {
         when(priceServiceMock.getAll()).thenReturn(testPriceList());
         mockMvc.perform(get("/prices/all")).andDo(print()).andExpect(status().isOk());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private List<PriceDTO> testPriceList() {

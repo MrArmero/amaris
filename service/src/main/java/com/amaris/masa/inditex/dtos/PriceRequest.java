@@ -6,9 +6,18 @@ import java.util.Date;
  * Default DTO used for priceRequest
  */
 public class PriceRequest {
+
     private Date date;
     private int productId;
     private int brandId;
+
+    public PriceRequest() {}
+
+    public PriceRequest(Date date, int productId, int brandId) {
+        this.date = date;
+        this.productId = productId;
+        this.brandId = brandId;
+    }
 
     public Date getDate() {
         return date;

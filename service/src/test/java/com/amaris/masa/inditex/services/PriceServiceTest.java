@@ -1,7 +1,14 @@
 package com.amaris.masa.inditex.services;
 
+import com.amaris.masa.inditex.datamodel.Brand;
+import com.amaris.masa.inditex.datamodel.Price;
+import com.amaris.masa.inditex.datamodel.Product;
+import com.amaris.masa.inditex.dtos.PriceDTO;
+import com.amaris.masa.inditex.dtos.PriceRequest;
+import com.amaris.masa.inditex.exceptions.RecordNotFoundException;
 import com.amaris.masa.inditex.repositories.PriceRepository;
-import com.amaris.masa.inditex.utils.UtilsTesting;
+import com.amaris.masa.inditex.utils.TestinginditextUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +17,15 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class PriceServiceTest {
@@ -21,18 +36,54 @@ class PriceServiceTest {
     @InjectMocks
     PriceService priceService;
 
+    private PriceRequest priceRequest;
+    private int defaultBrand;
+    private int defaultProduct;
+    private Date defaultDate;
+    private List<Price> defaultPrices;
 
     @BeforeEach
     void setUp() {
+        defaultBrand = 4;
+        defaultProduct = 34;
+        defaultDate = new Date();
+
+        priceRequest = new PriceRequest();
+        priceRequest.setBrandId(defaultBrand);
+        priceRequest.setProductId(defaultProduct);
+        priceRequest.setDate(defaultDate);
+
+        Brand brand = new Brand();
+        brand.setId(defaultBrand);
+        Product product = new Product();
+        product.setId(defaultProduct);
+        Price price = new Price();
+        price.setAmount(BigDecimal.ONE);
+        price.setBrand(brand);
+        price.setProduct(product);
+        defaultPrices = new ArrayList<>();
+        defaultPrices.add(price);
     }
 
     @Test
-    void getPriceByDateProductAndBrand() {
+    @DisplayName("Finding action with a mocked result")
+    void getPriceByDateProductAndBrand() throws RecordNotFoundException {
+        when(priceRepository.getPriceByDateProductAndBrand(any(Date.class), anyInt(), anyInt())).thenReturn(defaultPrices);
+        PriceDTO priceDTO = priceService.getPriceByDateProductAndBrand(priceRequest);
+        assertNotNull(priceDTO, TestinginditextUtils.UNEXPECTED_VALUE);
+    }
+
+    @Test
+    @DisplayName("Finding action without results is throwing a RecordNotFoundException")
+    void getPriceByDateProductAndBrandThrowRecordNotFoundException() {
+        Assertions.assertThrows(RecordNotFoundException.class, ()->{
+            priceService.getPriceByDateProductAndBrand(priceRequest);
+        });
     }
 
     @Test
     @DisplayName("List all prices stored in database")
     void getAllEmptyList() {
-        assertTrue(CollectionUtils.isEmpty(priceService.getAll()), UtilsTesting.UNEXPECTED_VALUE);
+        assertTrue(CollectionUtils.isEmpty(priceService.getAll()), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 }
