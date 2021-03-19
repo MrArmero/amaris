@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -65,8 +64,19 @@ public class PriceController {
      */
     @PostMapping(value = "/find", consumes = "application/json", produces = "application/json")
     public ResponseEntity<PriceDTO> getPriceByPost(@RequestBody PriceRequest priceRequest) throws RecordNotFoundException {
-        System.out.println("Request::::" + priceRequest.getDate());
         return new ResponseEntity<PriceDTO>(priceService.getPriceByDateProductAndBrand(priceRequest), new HttpHeaders(), HttpStatus.OK);
+    }
+
+    /**
+     * Obtiene un precio con una llamada POST pasando un objeto json que se mapee al DTO priceRequest.
+     * @param priceRequest
+     * @return Precio
+     * @throws RecordNotFoundException
+     */
+    @PostMapping(value = "/find/daylist", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<List<PriceDTO>> getDailyPriceListByPost(@RequestBody PriceRequest priceRequest) throws RecordNotFoundException {
+        System.out.println("Request::::" + priceRequest.getDate());
+        return new ResponseEntity<List<PriceDTO>>(priceService.getDailyPriceList(priceRequest), new HttpHeaders(), HttpStatus.OK);
     }
 
     /**

@@ -80,4 +80,18 @@ class PriceServiceTest {
     void getAllEmptyList() {
         assertTrue(CollectionUtils.isEmpty(priceService.getAll()), TestinginditextUtils.UNEXPECTED_VALUE);
     }
+
+    @Test
+    @DisplayName("List all valid prices sorted by priority")
+    void getDailyPriceList() throws RecordNotFoundException {
+        when(priceRepository.getPriceByDateProductAndBrand(any(LocalDateTime.class), anyInt(), anyInt())).thenReturn(defaultPrices);
+        List<PriceDTO> priceList = priceService.getDailyPriceList(priceRequest);
+        assertNotNull(priceList, TestinginditextUtils.UNEXPECTED_VALUE);
+    }
+
+    @Test
+    @DisplayName("Finding daily action without results is throwing a RecordNotFoundException")
+    void getDailyPriceListEmpty() {
+        assertTrue(priceService.getDailyPriceList(priceRequest).size()==0, TestinginditextUtils.UNEXPECTED_VALUE);
+    }
 }

@@ -168,4 +168,17 @@ public class PriceDTO {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    @Override
+    public String toString() {
+        return "PriceDTO{" +
+                "productId=" + productId +
+                ", brandId=" + brandId +
+                ", priceId=" + priceId +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", price='" + price + '\'' +
+                ", currency='" + currency + '\'' +
+                '}';
+    }
 }

@@ -4,7 +4,6 @@ import com.amaris.masa.inditex.dtos.PriceDTO;
 import com.amaris.masa.inditex.dtos.PriceRequest;
 import com.amaris.masa.inditex.services.PriceService;
 import com.amaris.masa.inditex.utils.TestinginditextUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -96,12 +95,15 @@ class PriceControllerTest {
         mockMvc.perform(get("/prices/all")).andDo(print()).andExpect(status().isOk());
     }
 
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @Test
+    void getDailyPriceListByPost() throws Exception {
+        when(priceServiceMock.getDailyPriceList(any(PriceRequest.class))).thenReturn(testPriceList());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/prices/find/daylist")
+                .content("{\"date\":\"2021-03-19-11.00.00\",\"productId\":35,\"brandId\":1}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     private List<PriceDTO> testPriceList() {
