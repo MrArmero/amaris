@@ -31,4 +31,12 @@ public class TestinginditextUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public static <T> T parseResponse(String result, Class<T> responseClass) {
+        try {
+            return MAPPER.readValue("\"" + result + "\"", responseClass);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

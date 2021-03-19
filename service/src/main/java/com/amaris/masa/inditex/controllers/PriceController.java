@@ -75,7 +75,6 @@ public class PriceController {
      */
     @PostMapping(value = "/find/daylist", consumes = "application/json", produces = "application/json")
     public ResponseEntity<List<PriceDTO>> getDailyPriceListByPost(@RequestBody PriceRequest priceRequest) throws RecordNotFoundException {
-        System.out.println("Request::::" + priceRequest.getDate());
         return new ResponseEntity<List<PriceDTO>>(priceService.getDailyPriceList(priceRequest), new HttpHeaders(), HttpStatus.OK);
     }
 
