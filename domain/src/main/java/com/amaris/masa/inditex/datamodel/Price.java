@@ -1,13 +1,11 @@
 package com.amaris.masa.inditex.datamodel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Price extends AbstractEntity {
@@ -17,13 +15,11 @@ public class Price extends AbstractEntity {
     private int id;
 
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDateTime startDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @NotNull
     @Column
@@ -39,15 +35,12 @@ public class Price extends AbstractEntity {
     private String currency;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "brandy", foreignKeyDefinition = "foreign key /* FK */ (brand_id) references Brand"))
-    private Brand brand;
+    @Column
+    private int brandId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn( foreignKey = @ForeignKey(name = "producty", foreignKeyDefinition = "foreign key /* FK */ (product_id) references Product"))
-    @JsonIgnore
-    private Product product;
+    @Column
+    private int productId;
 
     public int getId() {
         return id;
@@ -57,19 +50,19 @@ public class Price extends AbstractEntity {
         this.id = id;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -85,8 +78,8 @@ public class Price extends AbstractEntity {
         return amount;
     }
 
-    public void setAmount(BigDecimal price) {
-        this.amount = price;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public String getCurrency() {
@@ -97,19 +90,19 @@ public class Price extends AbstractEntity {
         this.currency = currency;
     }
 
-    public Brand getBrand() {
-        return brand;
+    public int getBrandId() {
+        return brandId;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
     }
 
-    public Product getProduct() {
-        return product;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

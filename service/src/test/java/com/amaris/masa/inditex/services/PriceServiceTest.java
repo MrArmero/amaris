@@ -1,8 +1,6 @@
 package com.amaris.masa.inditex.services;
 
-import com.amaris.masa.inditex.datamodel.Brand;
 import com.amaris.masa.inditex.datamodel.Price;
-import com.amaris.masa.inditex.datamodel.Product;
 import com.amaris.masa.inditex.dtos.PriceDTO;
 import com.amaris.masa.inditex.dtos.PriceRequest;
 import com.amaris.masa.inditex.exceptions.RecordNotFoundException;
@@ -18,8 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,28 +37,24 @@ class PriceServiceTest {
     private PriceRequest priceRequest;
     private int defaultBrand;
     private int defaultProduct;
-    private Date defaultDate;
+    private LocalDateTime defaultDate;
     private List<Price> defaultPrices;
 
     @BeforeEach
     void setUp() {
         defaultBrand = 4;
         defaultProduct = 34;
-        defaultDate = new Date();
+        defaultDate = LocalDateTime.now();
 
         priceRequest = new PriceRequest();
         priceRequest.setBrandId(defaultBrand);
         priceRequest.setProductId(defaultProduct);
         priceRequest.setDate(defaultDate);
 
-        Brand brand = new Brand();
-        brand.setId(defaultBrand);
-        Product product = new Product();
-        product.setId(defaultProduct);
         Price price = new Price();
         price.setAmount(BigDecimal.ONE);
-        price.setBrand(brand);
-        price.setProduct(product);
+        price.setBrandId(defaultBrand);
+        price.setProductId(defaultProduct);
         defaultPrices = new ArrayList<>();
         defaultPrices.add(price);
     }
@@ -68,7 +62,7 @@ class PriceServiceTest {
     @Test
     @DisplayName("Finding action with a mocked result")
     void getPriceByDateProductAndBrand() throws RecordNotFoundException {
-        when(priceRepository.getPriceByDateProductAndBrand(any(Date.class), anyInt(), anyInt())).thenReturn(defaultPrices);
+        when(priceRepository.getPriceByDateProductAndBrand(any(LocalDateTime.class), anyInt(), anyInt())).thenReturn(defaultPrices);
         PriceDTO priceDTO = priceService.getPriceByDateProductAndBrand(priceRequest);
         assertNotNull(priceDTO, TestinginditextUtils.UNEXPECTED_VALUE);
     }

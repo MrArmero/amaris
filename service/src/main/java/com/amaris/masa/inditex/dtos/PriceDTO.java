@@ -1,6 +1,8 @@
 package com.amaris.masa.inditex.dtos;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
 
 /**
  * DTO para el response.
@@ -25,12 +27,14 @@ public class PriceDTO {
     /**
      * Fecha de inicio
      */
-    private Date startDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd-HH.mm.ss")
+    private LocalDateTime startDate;
 
     /**
      * Fecha de fin
      */
-    private Date endDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd-HH.mm.ss")
+    private LocalDateTime endDate;
 
     /**
      * Precio
@@ -57,7 +61,7 @@ public class PriceDTO {
      * @param price
      * @param currency
      */
-    public PriceDTO(int productId, int brandId, int priceId, Date startDate, Date endDate, String price, String currency) {
+    public PriceDTO(int productId, int brandId, int priceId, LocalDateTime startDate, LocalDateTime endDate, String price, String currency) {
         this.productId = productId;
         this.brandId = brandId;
         this.priceId = priceId;
@@ -112,28 +116,28 @@ public class PriceDTO {
     /**
      * @return fecha de inicio
      */
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
     /**
      * @param startDate
      */
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
     /**
      * @return fecha de fin
      */
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
     /**
      * @param endDate
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

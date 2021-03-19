@@ -3,34 +3,32 @@ package com.amaris.masa.inditex.datamodel;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 public abstract class AbstractEntity <T extends AbstractEntity> implements Serializable, Cloneable {
 
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date")
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modification_date")
-    private Date modificationDate;
+    private LocalDateTime modificationDate;
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getModificationDate() {
+    public LocalDateTime getModificationDate() {
         return modificationDate;
     }
 
-    public void setModificationDate(Date modificationDate) {
+    public void setModificationDate(LocalDateTime modificationDate) {
         this.modificationDate = modificationDate;
     }
 }

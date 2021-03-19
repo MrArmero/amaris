@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,45 +34,51 @@ class PriceRepositoryTest {
 
     @Test
     void getPriceByDateProductAndBrandNotEmpty() throws ParseException {
-        DateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss");
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
-                sdf.parse("2020-06-18-01.01.00"),35455,1);
+                LocalDateTime.parse("2020-06-18-01.01.00", formatter),
+                35455,1);
 
         assertFalse(CollectionUtils.isEmpty(prices), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
     void getPriceByDateProductAndBrandExpectedValue() throws ParseException {
-        DateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss");
+
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
-                sdf.parse("2020-06-18-01.01.00"),35455,1);
+                LocalDateTime.parse("2020-06-18-01.01.00", formatter),
+                35455,1);
 
         assertEquals(CollectionUtils.firstElement(prices).getAmount(), BigDecimal.valueOf(38.95), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
     void getPriceByDateProductAndBrandExpectedValueSecondCase() throws ParseException {
-        DateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss");
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
-                sdf.parse("2020-06-14-17.01.00"),35455,1);
+                LocalDateTime.parse("2020-06-14-17.01.00", formatter),
+                35455,1);
 
         assertEquals(CollectionUtils.firstElement(prices).getAmount(), BigDecimal.valueOf(25.45), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
     void getPriceByDateProductAndBrandExpectedValueThirdCase() throws ParseException {
-        DateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss");
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
-                sdf.parse("2020-06-15-11.00.00"),35455,1);
+                LocalDateTime.parse("2020-06-15-11.00.00", formatter),
+                35455,1);
 
         assertEquals(CollectionUtils.firstElement(prices).getId(), 3, TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
     void getPriceByDateProductAndBrandEmpty() throws ParseException {
-        DateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss");
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(
-                sdf.parse("2023-06-15-11.00.00"),35455,1);
+                LocalDateTime.parse("2023-06-15-11.00.00", formatter),
+                35455,1);
 
         assertTrue(CollectionUtils.isEmpty(prices), TestinginditextUtils.UNEXPECTED_VALUE);
     }

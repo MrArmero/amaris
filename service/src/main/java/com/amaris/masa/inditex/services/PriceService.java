@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +19,7 @@ public class PriceService {
     @Autowired
     private PriceRepository priceRepository;
 
-    public PriceDTO getPriceByDateProductAndBrand(Date date, int productId, int brandId) throws RecordNotFoundException  {
+    public PriceDTO getPriceByDateProductAndBrand(LocalDateTime date, int productId, int brandId) throws RecordNotFoundException  {
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(date, productId, brandId);
 
         if (CollectionUtils.isEmpty(prices)) {
@@ -28,7 +28,7 @@ public class PriceService {
 
         Price firstPrice = CollectionUtils.firstElement(prices);
 
-        return new PriceDTO(firstPrice.getProduct().getId(), firstPrice.getBrand().getId(),
+        return new PriceDTO(firstPrice.getProductId(), firstPrice.getBrandId(),
                 firstPrice.getId(), firstPrice.getStartDate(), firstPrice.getEndDate(),
                 firstPrice.getAmount().toString(), firstPrice.getCurrency());
     }
@@ -39,7 +39,7 @@ public class PriceService {
 
     public List<PriceDTO> getAll() {
        return priceRepository.findAll().stream().map(
-                s -> new PriceDTO(s.getProduct().getId(), s.getBrand().getId(), s.getId(),
+                s -> new PriceDTO(s.getProductId(), s.getBrandId(), s.getId(),
                                 s.getStartDate(), s.getEndDate(), s.getAmount().toString(),
                                 s.getCurrency())
         ).collect(Collectors.toList());

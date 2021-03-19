@@ -15,8 +15,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,8 +39,8 @@ class PriceControllerTest {
 
     @Test
     void getPriceByGet() throws Exception {
-        PriceDTO priceDTO = new PriceDTO(35455, 1, 1, new Date(), new Date(), "82.93", "EUR");
-        when(priceServiceMock.getPriceByDateProductAndBrand(any(Date.class), anyInt(), anyInt())).thenReturn(priceDTO);
+        PriceDTO priceDTO = new PriceDTO(35455, 1, 1, LocalDateTime.now(), LocalDateTime.now(), "82.93", "EUR");
+        when(priceServiceMock.getPriceByDateProductAndBrand(any(LocalDateTime.class), anyInt(), anyInt())).thenReturn(priceDTO);
         mockMvc.perform(get("/prices/find/2020-06-18-01.01.00/35455/1")).andDo(print()).andExpect(status().isOk());
         MvcResult requestResult = mockMvc.perform(get("/prices/find/2020-06-18-01.01.00/35455/1"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
@@ -50,8 +50,8 @@ class PriceControllerTest {
 
     @Test
     void getPriceByPostFindingByParamsIsOK() throws Exception {
-        PriceDTO priceDTO = new PriceDTO(35455, 1, 1, new Date(), new Date(), "82.93", "EUR");
-        when(priceServiceMock.getPriceByDateProductAndBrand(any(Date.class), anyInt(), anyInt())).thenReturn(priceDTO);
+        PriceDTO priceDTO = new PriceDTO(35455, 1, 1, LocalDateTime.now(), LocalDateTime.now(), "82.93", "EUR");
+        when(priceServiceMock.getPriceByDateProductAndBrand(any(LocalDateTime.class), anyInt(), anyInt())).thenReturn(priceDTO);
 
         mockMvc.perform(post("/prices/find/params")
                     .param("date", "2020-06-18-01.01.00")
@@ -62,8 +62,8 @@ class PriceControllerTest {
 
     @Test
     void getPriceByPostFindingByParamsHasAValidResponse() throws Exception {
-        PriceDTO priceDTO = new PriceDTO(35455, 1, 1, new Date(), new Date(), "82.93", "EUR");
-        when(priceServiceMock.getPriceByDateProductAndBrand(any(Date.class), anyInt(), anyInt())).thenReturn(priceDTO);
+        PriceDTO priceDTO = new PriceDTO(35455, 1, 1, LocalDateTime.now(), LocalDateTime.now(), "82.93", "EUR");
+        when(priceServiceMock.getPriceByDateProductAndBrand(any(LocalDateTime.class), anyInt(), anyInt())).thenReturn(priceDTO);
 
         MvcResult requestResult = mockMvc.perform(post("/prices/find/params")
                 .param("date", "2020-06-18-01.01.00")
@@ -77,11 +77,11 @@ class PriceControllerTest {
 
     @Test
     void getPriceByPriceRequest() throws Exception {
-        PriceDTO priceDTO = new PriceDTO(35, 1, 1, new Date(), new Date(), "82.93", "EUR");
+        PriceDTO priceDTO = new PriceDTO(35, 1, 1, LocalDateTime.now(), LocalDateTime.now(), "82.93", "EUR");
         when(priceServiceMock.getPriceByDateProductAndBrand(any(PriceRequest.class))).thenReturn(priceDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/prices/find")
-                .content(asJsonString(new PriceRequest(new Date(), 1,1)))
+                .content("{\"date\":\"2021-03-19-11.00.00\",\"productId\":35,\"brandId\":1}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -105,9 +105,9 @@ class PriceControllerTest {
     }
 
     private List<PriceDTO> testPriceList() {
-        PriceDTO priceOne = new PriceDTO(1, 1, 1, new Date(), new Date(), "12.03", "GBP");
-        PriceDTO priceTwo = new PriceDTO(2, 2, 2, new Date(), new Date(), "82.93", "EUR");
-        PriceDTO priceThree = new PriceDTO(3, 3, 3, new Date(), new Date(), "19.08", "EUR");
+        PriceDTO priceOne = new PriceDTO(1, 1, 1, LocalDateTime.now(), LocalDateTime.now(), "12.03", "GBP");
+        PriceDTO priceTwo = new PriceDTO(2, 2, 2, LocalDateTime.now(), LocalDateTime.now(), "82.93", "EUR");
+        PriceDTO priceThree = new PriceDTO(3, 3, 3, LocalDateTime.now(), LocalDateTime.now(), "19.08", "EUR");
         return Arrays.asList(priceOne, priceTwo, priceThree);
     }
 }

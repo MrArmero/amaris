@@ -1,29 +1,32 @@
 package com.amaris.masa.inditex.dtos;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
 
 /**
  * Default DTO used for priceRequest
  */
 public class PriceRequest {
 
-    private Date date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd-HH.mm.ss")
+    private LocalDateTime date;
     private int productId;
     private int brandId;
 
     public PriceRequest() {}
 
-    public PriceRequest(Date date, int productId, int brandId) {
+    public PriceRequest(LocalDateTime date, int productId, int brandId) {
         this.date = date;
         this.productId = productId;
         this.brandId = brandId;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
