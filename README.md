@@ -3,7 +3,6 @@
 # Miguel Ángel Sánchez Armero
 # --------------------------------------------------------------------------------------
 
-
 Descripción
 ------------
 En la base de datos de comercio electrónico de la compañía disponemos de la tabla PRICES que refleja el precio final (pvp) 
@@ -22,7 +21,8 @@ Se pide:
 
 Solución implementada
 ------------------------
-Finalmente se han implementado 3 tipos de end points diferentes, según cada cuanto tiempo se pueda pedir la información requerida. Todos mantienen una respuesta con la estructura requerida.
+Finalmente se han implementado 3 tipos de end points diferentes, según cada cuanto tiempo se pueda pedir la información requerida. 
+Todos mantienen una respuesta con la estructura requerida.
 
 Caso 1: 
 	Entrada: fecha, producto y cadena; 
