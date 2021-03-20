@@ -1,5 +1,6 @@
 package com.amaris.masa.inditex.dtos;
 
+import com.amaris.masa.inditex.datamodel.Price;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
@@ -69,6 +70,11 @@ public class PriceDTO {
         this.endDate = endDate;
         this.price = price;
         this.currency = currency;
+    }
+
+    public PriceDTO(Price price) {
+        this( price.getProductId(), price.getBrandId(), price.getId(),
+                price.getStartDate(), price.getEndDate(), price.getAmount().toString(), price.getCurrency());
     }
 
     /**

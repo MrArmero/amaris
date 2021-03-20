@@ -45,9 +45,7 @@ public class PriceService {
         checkPeriodConflicts(prices);
         // Sorting list by priority in descending order
        return prices.stream().sorted(Comparator.comparingInt(Price::getPriority).reversed())
-               .map( s -> new PriceDTO(s.getProductId(), s.getBrandId(), s.getId(),
-                            s.getStartDate(), s.getEndDate(), s.getAmount().toString(), s.getCurrency())
-        ).collect(Collectors.toList());
+               .map( s -> new PriceDTO(s)).collect(Collectors.toList());
     }
 
     public List<PriceDTO> getDailyPriceList(PriceRequest priceRequest)  {
@@ -62,9 +60,7 @@ public class PriceService {
         return (prices == null || prices.isEmpty())?
                 new ArrayList<>() :
                 prices.stream().sorted(Comparator.comparingInt(Price::getPriority).reversed())
-                        .map(s -> new PriceDTO(s.getProductId(), s.getBrandId(), s.getId(),
-                            s.getStartDate(), s.getEndDate(), s.getAmount().toString(), s.getCurrency()))
-                        .collect(Collectors.toList());
+                        .map(s -> new PriceDTO(s)).collect(Collectors.toList());
     }
 
     private void checkPeriodConflicts(List<Price> prices) {
