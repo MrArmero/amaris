@@ -71,7 +71,7 @@ public class PriceControllerIT {
     {
         assertTrue(
         this.restTemplate.getForObject("http://localhost:" + port + "/prices/all", List.class)
-            .size() == 4, TestinginditextUtils.UNEXPECTED_VALUE);
+            .size() == 6, TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
@@ -147,7 +147,7 @@ public class PriceControllerIT {
                 priceRequestCaseTwo, List.class);
 
         assertFalse(results.getBody().isEmpty(), TestinginditextUtils.UNEXPECTED_VALUE);
-        assertTrue(results.getBody().size()==2, TestinginditextUtils.UNEXPECTED_VALUE);
+        assertTrue(results.getBody().size()==3, TestinginditextUtils.UNEXPECTED_VALUE);
 
         List<PriceDTO> priceList = mapper.convertValue( results.getBody(), new TypeReference<List<PriceDTO>>(){});
 
@@ -178,7 +178,7 @@ public class PriceControllerIT {
                 priceRequestCaseFour, List.class);
 
         assertFalse(results.getBody().isEmpty(), TestinginditextUtils.UNEXPECTED_VALUE);
-        assertTrue(results.getBody().size()==2, TestinginditextUtils.UNEXPECTED_VALUE);
+        assertTrue(results.getBody().size()==3, TestinginditextUtils.UNEXPECTED_VALUE);
 
         List<PriceDTO> priceList = mapper.convertValue( results.getBody(), new TypeReference<List<PriceDTO>>(){});
 

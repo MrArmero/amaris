@@ -42,6 +42,19 @@ public class Price extends AbstractEntity {
     @Column
     private int productId;
 
+    public Price() {}
+
+    public Price(Price originalPrice) {
+        this.id = originalPrice.getId();
+        this.startDate = originalPrice.getStartDate();
+        this.endDate = originalPrice.getEndDate();
+        this.priority = originalPrice.getPriority();
+        this.amount = originalPrice.getAmount();
+        this.currency = originalPrice.getCurrency();
+        this.brandId = originalPrice.getBrandId();
+        this.productId = originalPrice.getProductId();
+    }
+
     public int getId() {
         return id;
     }

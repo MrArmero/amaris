@@ -7,10 +7,10 @@ import com.amaris.masa.inditex.exceptions.RecordNotFoundException;
 import com.amaris.masa.inditex.repositories.PriceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,9 +39,14 @@ public class PriceService {
     }
 
     public List<PriceDTO> getAll() {
-       return priceRepository.findAll().stream().map(
-                s -> new PriceDTO(s.getProductId(), s.getBrandId(), s.getId(),
-                        s.getStartDate(), s.getEndDate(), s.getAmount().toString(), s.getCurrency())
+
+        List<Price> prices = priceRepository.findAll();
+        // If two prices have a temporary coincidence this method solve this conflict
+        checkPeriodConflicts(prices);
+        // Sorting list by priority in descending order
+       return prices.stream().sorted(Comparator.comparingInt(Price::getPriority).reversed())
+               .map( s -> new PriceDTO(s.getProductId(), s.getBrandId(), s.getId(),
+                            s.getStartDate(), s.getEndDate(), s.getAmount().toString(), s.getCurrency())
         ).collect(Collectors.toList());
     }
 
@@ -51,10 +56,64 @@ public class PriceService {
 
     private List<PriceDTO> getDailyPriceList(LocalDateTime date, int productId, int brandId)  {
         List<Price> prices = priceRepository.getPriceByDateProductAndBrand(date, productId, brandId);
+        // If two prices have a temporary coincidence this method solve this conflict
+        checkPeriodConflicts(prices);
 
         return (prices == null || prices.isEmpty())?
                 new ArrayList<>() :
-                prices.stream().map(s -> new PriceDTO(s.getProductId(), s.getBrandId(), s.getId(),
-                s.getStartDate(), s.getEndDate(), s.getAmount().toString(), s.getCurrency())).collect(Collectors.toList());
+                prices.stream().sorted(Comparator.comparingInt(Price::getPriority).reversed())
+                        .map(s -> new PriceDTO(s.getProductId(), s.getBrandId(), s.getId(),
+                            s.getStartDate(), s.getEndDate(), s.getAmount().toString(), s.getCurrency()))
+                        .collect(Collectors.toList());
+    }
+
+    private void checkPeriodConflicts(List<Price> prices) {
+        if (prices!=null && !prices.isEmpty() && prices.size()>1 && hasAndSolveConflicts(prices)) {
+            checkPeriodConflicts(prices);
+        }
+    }
+
+    private boolean hasAndSolveConflicts(List<Price> prices) {
+        boolean hasConflict = false;
+
+        // Sorted by starting date
+        prices.sort((p1,p2) -> p1.getStartDate().compareTo(p2.getStartDate()));
+
+        for (int i=0; i < (prices.size()-1); i++) {
+            Price leftP = prices.get(i);
+            Price rightP = prices.get(i+1);
+            if (rightP.getStartDate().compareTo(leftP.getEndDate())<0) {
+                hasConflict=true;
+                splitPeriod(prices,leftP,rightP);
+                break;
+            }
+        }
+
+        return hasConflict;
+    }
+
+    private void splitPeriod(List<Price> prices, Price leftP, Price rightP) {
+
+        if (leftP.getPriority() < rightP.getPriority()
+                && leftP.getEndDate().compareTo(rightP.getEndDate())>0) {
+            // As right, with a bigger, price is included in range period of left we have to split it,
+            // period of rightP.
+            Price copyOfLeft = new Price(leftP);
+            copyOfLeft.setStartDate(rightP.getEndDate());
+            prices.add(copyOfLeft);
+            leftP.setEndDate(rightP.getStartDate());
+        } else if (leftP.getPriority() < rightP.getPriority()
+                && leftP.getEndDate().compareTo(rightP.getEndDate())<=0) {
+            leftP.setEndDate(rightP.getStartDate());
+        } else if (leftP.getPriority() >= rightP.getPriority()
+                && leftP.getEndDate().compareTo(rightP.getEndDate())>=0) {
+            // Less priority and it is included in same period then it has no sense anymore.
+            prices.remove(rightP);
+        } else if (leftP.getPriority() >= rightP.getPriority()
+                && leftP.getEndDate().compareTo(rightP.getEndDate())<0) {
+            // Less priority and only partial overlapping
+            rightP.setStartDate(leftP.getEndDate());
+        }
+
     }
 }
