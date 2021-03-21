@@ -80,4 +80,13 @@ class PriceRepositoryTest {
 
         assertTrue(CollectionUtils.isEmpty(prices), TestinginditextUtils.UNEXPECTED_VALUE);
     }
+
+    @Test
+    void getNextPrices() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss");
+        List<Price> prices = priceRepository.getNextPrices(LocalDateTime.parse("2020-06-15-11.00.00", formatter),35455,1);
+
+        assertEquals(1, CollectionUtils.firstElement(prices).getId(), TestinginditextUtils.UNEXPECTED_VALUE);
+        assertEquals(3, prices.size(), TestinginditextUtils.UNEXPECTED_VALUE);
+    }
 }
