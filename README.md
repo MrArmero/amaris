@@ -21,7 +21,7 @@ Se pide:
 
 Solución implementada
 ------------------------
-Finalmente se han implementado 3 tipos de end points diferentes, según cada cuanto tiempo se pueda pedir la información requerida. 
+Finalmente se han implementado 4 tipos de end points diferentes, según cada cuanto tiempo se pueda pedir la información requerida. 
 Todos mantienen una respuesta con la estructura requerida.
 
 Caso 1: 
@@ -30,8 +30,9 @@ Caso 1:
 	Notas: Este caso es idóneo si se tiene la opción de llamar a este endpoint cada vez que sea necesaria.
 Caso 2: 
 	Entrada: fecha, producto y cadena; 
-	Respuesta: devuelve un array de los precios válidos, ordenado por prioridad. En esta lista se habrán eliminado los solapamientos en las fechas entre precios en la base de datos.
-	Notas: De haber un solapamiento, devuelve todos los precios válidos para la fecha dada permitiendo ver a qué hora concreta se aplica cada uno de estos precios.
+	Respuesta: devuelve la lista de precios válidos, a partir de la fecha dada
+	Notas: De haber un solapamiento, se elimina, devuelve todos los precios válidos para la fecha dada permitiendo ver qué precio y a qué hora 
+			concreta se aplica cada uno de estos precios. Estos precios van ordenados por fecha de inicio de aplicación.
 Caso 3: Se piden todos los precios
 	Entrada: sin parámetros. 
 	Respuesta: listado de precios almacenados en la base de datos, ordenados por prioridad y habiendo eliminado solapamientos en las fechas de aplicación de cada precio.

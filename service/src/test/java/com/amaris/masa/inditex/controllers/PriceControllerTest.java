@@ -96,10 +96,10 @@ class PriceControllerTest {
     }
 
     @Test
-    void getDailyPriceListByPost() throws Exception {
-        when(priceServiceMock.getDailyPriceList(any(PriceRequest.class))).thenReturn(testPriceList());
+    void getNextPriceListByPost() throws Exception {
+        when(priceServiceMock.getNextPriceList(any(PriceRequest.class))).thenReturn(testPriceList());
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/prices/find/daylist")
+        mockMvc.perform(MockMvcRequestBuilders.post("/prices/find/list")
                 .content("{\"date\":\"2021-03-19-11.00.00\",\"productId\":35,\"brandId\":1}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

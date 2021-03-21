@@ -48,18 +48,23 @@ public class PriceService {
                .map( s -> new PriceDTO(s)).collect(Collectors.toList());
     }
 
-    public List<PriceDTO> getDailyPriceList(PriceRequest priceRequest)  {
-        return getDailyPriceList(priceRequest.getDate(), priceRequest.getProductId(), priceRequest.getBrandId());
+    /**
+     * Get list of prices from given date on.
+     * @param priceRequest
+     * @return list of prices
+     */
+    public List<PriceDTO> getNextPriceList(PriceRequest priceRequest)  {
+        return getNextPriceList(priceRequest.getDate(), priceRequest.getProductId(), priceRequest.getBrandId());
     }
 
-    private List<PriceDTO> getDailyPriceList(LocalDateTime date, int productId, int brandId)  {
-        List<Price> prices = priceRepository.getPriceByDateProductAndBrand(date, productId, brandId);
+    private List<PriceDTO> getNextPriceList(LocalDateTime date, int productId, int brandId)  {
+        List<Price> prices = priceRepository.getNextPrices(date, productId, brandId);
         // If two prices have a temporary coincidence this method solve this conflict
         checkPeriodConflicts(prices);
 
         return (prices == null || prices.isEmpty())?
                 new ArrayList<>() :
-                prices.stream().sorted(Comparator.comparingInt(Price::getPriority).reversed())
+                prices.stream().filter(s -> s.getEndDate().compareTo(date)>0)
                         .map(s -> new PriceDTO(s)).collect(Collectors.toList());
     }
 
@@ -88,6 +93,12 @@ public class PriceService {
         return hasConflict;
     }
 
+    /**
+     * Remove overlappings
+     * @param prices list of prices
+     * @param leftP price with older start date
+     * @param rightP price with newer start date
+     */
     private void splitPeriod(List<Price> prices, Price leftP, Price rightP) {
 
         if (leftP.getPriority() < rightP.getPriority()

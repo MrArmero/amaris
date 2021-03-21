@@ -115,39 +115,40 @@ public class PriceControllerIT {
     }
 
     @Test
-    public void testGetDailyPriceListByPost()
+    public void testGetNextPriceListByPost()
     {
         ResponseEntity<List> results = this.restTemplate.postForEntity(
-                "http://localhost:" + port + "/prices/find/daylist",
+                "http://localhost:" + port + "/prices/find/list",
                 priceRequestNow,
                 List.class);
         assertTrue(results.getBody().isEmpty(), TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
-    public void testGetDailyPriceListByPostFirst()
+    public void testGetNextPriceListByPostFirst()
     {
         ResponseEntity<List> results = this.restTemplate.postForEntity(
-                "http://localhost:" + port + "/prices/find/daylist",
+                "http://localhost:" + port + "/prices/find/list",
                 priceRequestCaseOne, List.class);
 
         assertFalse(results.getBody().isEmpty(), TestinginditextUtils.UNEXPECTED_VALUE);
-        assertTrue(results.getBody().size()==1, TestinginditextUtils.UNEXPECTED_VALUE);
+        assertTrue(results.getBody().size()==6, TestinginditextUtils.UNEXPECTED_VALUE);
 
         List<PriceDTO> priceList = mapper.convertValue( results.getBody(), new TypeReference<List<PriceDTO>>(){});
 
         assertEquals(priceList.get(0).getPrice(), "35.50", TestinginditextUtils.UNEXPECTED_VALUE);
+        assertEquals(priceList.get(1).getPrice(), "25.45", TestinginditextUtils.UNEXPECTED_VALUE);
     }
 
     @Test
-    public void testGetDailyPriceListByPostSecond()
+    public void testGetNextPriceListByPostSecond()
     {
         ResponseEntity<List> results = this.restTemplate.postForEntity(
-                "http://localhost:" + port + "/prices/find/daylist",
+                "http://localhost:" + port + "/prices/find/list",
                 priceRequestCaseTwo, List.class);
 
         assertFalse(results.getBody().isEmpty(), TestinginditextUtils.UNEXPECTED_VALUE);
-        assertTrue(results.getBody().size()==3, TestinginditextUtils.UNEXPECTED_VALUE);
+        assertTrue(results.getBody().size()==5, TestinginditextUtils.UNEXPECTED_VALUE);
 
         List<PriceDTO> priceList = mapper.convertValue( results.getBody(), new TypeReference<List<PriceDTO>>(){});
 
@@ -156,14 +157,14 @@ public class PriceControllerIT {
     }
 
     @Test
-    public void testGetDailyPriceListByPostThird()
+    public void testGetNextPriceListByPostThird()
     {
         ResponseEntity<List> results = this.restTemplate.postForEntity(
-                "http://localhost:" + port + "/prices/find/daylist",
+                "http://localhost:" + port + "/prices/find/list",
                 priceRequestCaseThree, List.class);
 
         assertFalse(results.getBody().isEmpty(), TestinginditextUtils.UNEXPECTED_VALUE);
-        assertTrue(results.getBody().size()==1, TestinginditextUtils.UNEXPECTED_VALUE);
+        assertTrue(results.getBody().size()==4, TestinginditextUtils.UNEXPECTED_VALUE);
 
         List<PriceDTO> priceList = mapper.convertValue( results.getBody(), new TypeReference<List<PriceDTO>>(){});
 
@@ -171,10 +172,10 @@ public class PriceControllerIT {
     }
 
     @Test
-    public void testGetDailyPriceListByPostForth()
+    public void testGetNextPriceListByPostForth()
     {
         ResponseEntity<List> results = this.restTemplate.postForEntity(
-                "http://localhost:" + port + "/prices/find/daylist",
+                "http://localhost:" + port + "/prices/find/list",
                 priceRequestCaseFour, List.class);
 
         assertFalse(results.getBody().isEmpty(), TestinginditextUtils.UNEXPECTED_VALUE);
@@ -187,24 +188,19 @@ public class PriceControllerIT {
     }
 
     @Test
-    public void testGetDailyPriceListByPostFifth()
+    public void testGetNextPriceListByPostFifth()
     {
         ResponseEntity<List> results = this.restTemplate.postForEntity(
-                "http://localhost:" + port + "/prices/find/daylist",
+                "http://localhost:" + port + "/prices/find/list",
                 priceRequestCaseFive,
                 List.class);
 
         assertFalse(results.getBody().isEmpty(), TestinginditextUtils.UNEXPECTED_VALUE);
-        assertTrue(results.getBody().size()==2, TestinginditextUtils.UNEXPECTED_VALUE);
+        assertTrue(results.getBody().size()==1, TestinginditextUtils.UNEXPECTED_VALUE);
 
         assertTrue(results.getBody().get(0).toString().contains("38.95"), TestinginditextUtils.UNEXPECTED_VALUE);
-        assertTrue(results.getBody().get(1).toString().contains("35.50"), TestinginditextUtils.UNEXPECTED_VALUE);
-
         List<PriceDTO> priceList = mapper.convertValue( results.getBody(), new TypeReference<List<PriceDTO>>(){});
-
         assertEquals(priceList.get(0).getPrice(), "38.95", TestinginditextUtils.UNEXPECTED_VALUE);
-        assertEquals(priceList.get(1).getPrice(), "35.50", TestinginditextUtils.UNEXPECTED_VALUE);
-
     }
 
     @Test
