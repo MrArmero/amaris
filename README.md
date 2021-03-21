@@ -21,7 +21,7 @@ Se pide:
 
 Solución implementada
 ------------------------
-Finalmente se han implementado 4 tipos de end points diferentes, según cada cuanto tiempo se pueda pedir la información requerida. 
+Finalmente se han implementado 3 tipos de end points diferentes, según cada cuanto tiempo se pueda pedir la información requerida. 
 Todos mantienen una respuesta con la estructura requerida.
 
 Caso 1: 
@@ -33,6 +33,7 @@ Caso 2:
 	Respuesta: devuelve la lista de precios válidos, a partir de la fecha dada
 	Notas: De haber un solapamiento, se elimina, devuelve todos los precios válidos para la fecha dada permitiendo ver qué precio y a qué hora 
 			concreta se aplica cada uno de estos precios. Estos precios van ordenados por fecha de inicio de aplicación.
+			Esta opción permite proveer al usuario con cuales serán los próximos precios a aplicar; sin necesidad de tener que hacer otra request.
 Caso 3: Se piden todos los precios
 	Entrada: sin parámetros. 
 	Respuesta: listado de precios almacenados en la base de datos, ordenados por prioridad y habiendo eliminado solapamientos en las fechas de aplicación de cada precio.
