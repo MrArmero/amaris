@@ -28,12 +28,14 @@ Caso 1:
 	Entrada: fecha, producto y cadena; 
 	Respuesta: devuelve el precio de mayor prioridad para esa hora en concreto.
 	Notas: Este caso es idóneo si se tiene la opción de llamar a este endpoint cada vez que sea necesaria.
+
 Caso 2: 
 	Entrada: fecha, producto y cadena; 
 	Respuesta: devuelve la lista de precios válidos, a partir de la fecha dada
 	Notas: De haber un solapamiento, se elimina, devuelve todos los precios válidos a partir de la fecha dada permitiendo ver qué precio y a qué hora 
 			concreta se aplica cada uno de estos precios. Estos precios van ordenados por fecha de inicio de aplicación.
 			Esta opción permite proveer al usuario cuales serán los próximos precios a aplicar; sin necesidad de tener que hacer otra request.
+
 Caso 3: Se piden todos los precios
 	Entrada: sin parámetros. 
 	Respuesta: listado de precios almacenados en la base de datos, ordenados por prioridad y habiendo eliminado solapamientos en las fechas de aplicación de cada precio.
@@ -48,5 +50,5 @@ Detalle técnico
 
 Documentación
 ---------------
-Memoria: doc/Memoria.docx
-Colección de Postman: doc/Inditex_amaris.postman_collection
+- Memoria: doc/Memoria.docx
+- Colección de Postman: doc/Inditex_amaris.postman_collection
