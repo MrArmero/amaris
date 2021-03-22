@@ -39,8 +39,8 @@ Caso 2: Se piden los precios a aplicar a partide una fecha determinada.
 	Respuesta: devuelve la lista de precios válidos, a partir de la fecha dada
 	
 	Notas: De haber un solapamiento, se elimina, devuelve todos los precios válidos a partir de la fecha dada permitiendo ver qué precio y a qué hora 
-			concreta se aplica cada uno de estos precios. Estos precios van ordenados por fecha de inicio de aplicación.
-			Esta opción permite proveer al usuario cuales serán los próximos precios a aplicar; sin necesidad de tener que hacer otra request.
+	concreta se aplica cada uno de estos precios. Estos precios van ordenados por fecha de inicio de aplicación.
+	Esta opción permite proveer al usuario cuales serán los próximos precios a aplicar; sin necesidad de tener que hacer otra request.
 
 Caso 3: Se piden todos los precios
 	
