@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "cbe1a25b-5b4e-4c3c-9aa7-d6b7f9212610",
+		"name": "Inditex",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get valid prices for a date",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"date\":\"2020-06-14-21.00.00\",\"productId\":35455,\"brandId\":1}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/prices/find/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices",
+						"find",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPrice POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2020-06-15-11.00.00",
+							"type": "text"
+						},
+						{
+							"key": "productId",
+							"value": "35455",
+							"type": "text"
+						},
+						{
+							"key": "brandId",
+							"value": "1",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/prices/find/params",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices",
+						"find",
+						"params"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPrice POST DTO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"date\":\"2020-06-15-11.00.00\",\"productId\":35455,\"brandId\":1}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/prices/find",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPrice GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/prices/find/2020-06-18-01.01.00/35455/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices",
+						"find",
+						"2020-06-18-01.01.00",
+						"35455",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all prices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/prices/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
